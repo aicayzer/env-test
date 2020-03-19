@@ -70,4 +70,4 @@ workflows:
             - build-job
           filters:
             branches:
-              only: prod
+              only: master
