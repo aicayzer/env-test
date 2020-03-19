@@ -3,7 +3,7 @@ jobs:
   build-job:
     docker:
       # specify the version you desire here
-      - image: circleci/node:8.0
+      - image: circleci/node:10.16.3
       
     working_directory: ~/repo
 
@@ -28,9 +28,9 @@ jobs:
       - run: yarn run lint
       - run: yarn test
   
-  deploy-job-prod:
+  deploy-job-master:
     docker:
-      - image: circleci/node:7.10
+      - image: circleci/node:10.16.3
     working_directory: ~/repo
     steps:
       - checkout
@@ -45,7 +45,7 @@ jobs:
       - run: sudo apt-get install awscli
       - run: yarn build
       - run:
-          name: Deploy to S3 if tests pass and branch is prod
+          name: Deploy to S3 if tests pass and branch is master
           command: aws s3 sync build/ s3://env-test  --delete --region eu-west-2
       # TODO: Consider only invalidating index.html
       - run:
@@ -65,7 +65,7 @@ workflows:
   build-deploy:
     jobs:
       - build-job
-      - deploy-job-prod:
+      - deploy-job-master:
           requires:
             - build-job
           filters:
