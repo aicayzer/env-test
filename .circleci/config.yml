@@ -1,37 +1,73 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
 version: 2
 jobs:
-  build:
+  build-job:
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
-# Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
+      
     working_directory: ~/repo
+
     steps:
       - checkout
-# Download and cache dependencies
+
+      # Download and cache dependencies
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
+
       - run: yarn install
+
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-# run tests!
+        
+      # run tests!
+      - run: yarn run lint
       - run: yarn test
-      - run: sudo apt-get update && sudo apt-get install -y python-dev
-      - run: sudo curl -O https://bootstrap.pypa.io/get-pip.py
-      - run: sudo python get-pip.py
-      - run: sudo pip install awscli --upgrade
-      - run: aws --version
-      - run: aws s3 ls
-      - run: yarn run deploy
+  
+  deploy-job-prod:
+    docker:
+      - image: circleci/node:7.10
+    working_directory: ~/repo
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run: yarn install
+      - run: sudo apt-get install awscli
+      - run: yarn build
+      - run:
+          name: Deploy to S3 if tests pass and branch is prod
+          command: aws s3 sync build/ s3://env-test  --delete --region eu-west-2
+      # TODO: Consider only invalidating index.html
+      - run:
+          name: Enable AWS CLI preview features
+          command: |
+                  aws configure set preview.cloudfront true
+                  aws configure set preview.create-invalidation true
+      - run:
+          name: Invalidate cloudfront content
+          command: |
+                  timestamp=$(date +%s)
+                  command=$(printf '{"Paths":{"Quantity":1,"Items":["/*"]},"CallerReference":"circleci-%s"}' $timestamp)
+                  echo $command > invbatch.json
+                  aws cloudfront create-invalidation --distribution-id XXXXYYYYZZZZ --invalidation-batch file://invbatch.json
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build-job
+      - deploy-job-prod:
+          requires:
+            - build-job
+          filters:
+            branches:
+              only: prod
