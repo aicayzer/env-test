@@ -24,9 +24,9 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
         
-      # run tests!
-      - run: yarn run lint
-      - run: yarn test
+#       # run tests!
+#       - run: yarn run lint
+#       - run: yarn test
   
   deploy-job-master:
     docker:
