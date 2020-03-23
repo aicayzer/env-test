@@ -1,73 +1,8 @@
 version: 2
 jobs:
-  build-job:
+  build:
     docker:
-      # specify the version you desire here
-      - image: circleci/node:10.16.3
-      
-    working_directory: ~/repo
-
+      -image: circleci/node:4.8.2
     steps:
-      - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run: yarn install
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-        
-#       # run tests!
-#       - run: yarn run lint
-#       - run: yarn test
-  
-  deploy-job-master:
-    docker:
-      - image: circleci/node:10.16.3
-    working_directory: ~/repo
-    steps:
-      - checkout
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run: yarn install
-      - run: sudo apt-get install awscli
-      - run: yarn build
-      - run:
-          name: Deploy to S3 if tests pass and branch is master
-          command: aws s3 sync build/ s3://env-test  --delete --region eu-west-2
-      # TODO: Consider only invalidating index.html
-      - run:
-          name: Enable AWS CLI preview features
-          command: |
-                  aws configure set preview.cloudfront true
-                  aws configure set preview.create-invalidation true
-      - run:
-          name: Invalidate cloudfront content
-          command: |
-                  timestamp=$(date +%s)
-                  command=$(printf '{"Paths":{"Quantity":1,"Items":["/*"]},"CallerReference":"circleci-%s"}' $timestamp)
-                  echo $command > invbatch.json
-                  aws cloudfront create-invalidation --distribution-id XXXXYYYYZZZZ --invalidation-batch file://invbatch.json
-workflows:
-  version: 2
-  build-deploy:
-    jobs:
-      - build-job
-      - deploy-job-master:
-          requires:
-            - build-job
-          filters:
-            branches:
-              only: master
+      -checkout
+      -run: echo "hello world"
