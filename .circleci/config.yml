@@ -1,4 +1,5 @@
-version: 2
+version: 2.1
+
 jobs:
   build-job:
     docker:
@@ -42,7 +43,7 @@ jobs:
       - run: npm build
       - run:
           name: Deploy to S3 if tests pass and branch is master
-          command: aws s3 sync build/ s3://env-test  --delete --region eu-west-2
+          command: aws s3 sync build/ s3://env-test47  --delete --region eu-west-2
 
 workflows:
   version: 2
