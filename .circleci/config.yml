@@ -36,7 +36,7 @@ jobs:
       - run: npm build
       - run:
           name: Deploy to s3
-          command: aws s3 sync build/ s3://env-test47  --delete --region eu-west-2
+          command: aws s3 sync s3://env-test47  --delete --region eu-west-2
 
 workflows:
   version: 2
