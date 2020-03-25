@@ -34,7 +34,7 @@ jobs:
 
       - run: npm install
       - run: sudo apt-get install awscli
-      - run: npm start build
+      - run: npm run-script build
       - run:
           name: Deploy to s3
           command: aws s3 sync s3://env-test47  --delete --region eu-west-2
