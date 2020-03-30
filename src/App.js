@@ -1,14 +1,13 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import TableComponent from "./tableComponent";
+import Header from "./Header";
 
 function App() {
 	return (
 		<div className="App">
-			<header className="App-header">
-				<img src={logo} className="App-logo" alt="logo" />
-				<h1>HELLO WORLD!!!!</h1>
-			</header>
+			<Header />
+			<TableComponent />
 		</div>
 	);
 }
