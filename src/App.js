@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import Header from "./Header";
-import TableComponent from "./TableComponent";
+import TableComponent from "./TableComponent.js";
 
 function App() {
 	return (
