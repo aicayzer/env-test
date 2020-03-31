@@ -1,6 +1,6 @@
 import React from "react";
 import { Table, Input, Button } from "antd";
-import "./TableComponent.css";
+import "./TableRender.css";
 import { products } from "./products.js";
 import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
@@ -21,7 +21,7 @@ data.forEach((item, i) => {
 	item.key = i + 1;
 });
 
-class TableComponent extends React.Component {
+class TableRender extends React.Component {
 	state = {
 		filteredInfo: null,
 		sortedInfo: null,
@@ -193,4 +193,4 @@ class TableComponent extends React.Component {
 		);
 	}
 }
-export default TableComponent;
+export default TableRender;
