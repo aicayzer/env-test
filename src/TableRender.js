@@ -15,12 +15,14 @@ let data = products.map((item) => ({
 	object            : item.action,
 	object_identifier : item.object_identifier,
 	s3_location       : item.s3_location,
-	s3_location_link  : `https://s3.console.aws.amazon.com/s3/object/${item.s3_location}`
+	s3_location_link  : `https://s3.console.aws.amazon.com/s3/object/${item.s3_location.substring(5)}`
 }));
 
 data.forEach((item, i) => {
 	item.key = i + 1;
 });
+
+console.log("DATA IS BELOW.......", data);
 
 class TableRender extends React.Component {
 	state = {
@@ -31,7 +33,7 @@ class TableRender extends React.Component {
 	};
 
 	handleChange = (pagination, filters, sorter) => {
-		console.log("Various parameters", pagination, filters, sorter);
+		// console.log("Various parameters", pagination, filters, sorter);
 		this.setState({
 			filteredInfo : filters,
 			sortedInfo   : sorter
@@ -182,9 +184,28 @@ class TableRender extends React.Component {
 				sortOrder : sortedInfo.columnKey === "s3_location" && sortedInfo.order,
 				ellipsis  : true,
 				...this.getColumnSearchProps("action")
+			},
+			{
+				title     : "View Object in AWS",
+				key       : "s3_location_link",
+				dataIndex : "s3_location_link",
+				render    : (text, record, key, dataIndex) => (
+					<span>
+						<a href={data} target="_blank">
+							View Object
+						</a>
+					</span>
+				)
 			}
+			//figure out how to enter the right link
+
+			// {
+			// 	title     : "TEST",
+			// 	dataIndex : "s3_location_link",
+			// 	key       : "s3_location_link",
+			// 	ellipsis  : true
+			// }
 		];
-		console.log(data);
 		return (
 			<div>
 				<div className="table-operations">
