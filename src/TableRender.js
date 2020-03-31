@@ -3,19 +3,20 @@ import { Table, Input, Button } from "antd";
 import "./TableRender.css";
 import { products } from "./products.js";
 // import ReactDOM from "react-dom";
-import "antd/dist/antd.css";
+// import "antd/dist/antd.css";
 import "./index.css";
 import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
 
-let data = products;
+// let data = products;
 
-// let data = products.map((item) => ({
-// 	action: item.action,
-// 	object: item.action,
-// 	object_identifier: item.object_identifier,
-// 	s3_location: "www.test.com" + item.s3_location
-// }));
+let data = products.map((item) => ({
+	action            : item.action,
+	object            : item.action,
+	object_identifier : item.object_identifier,
+	s3_location       : item.s3_location,
+	s3_location_link  : `https://s3.console.aws.amazon.com/s3/object/${item.s3_location}`
+}));
 
 data.forEach((item, i) => {
 	item.key = i + 1;
@@ -23,17 +24,17 @@ data.forEach((item, i) => {
 
 class TableRender extends React.Component {
 	state = {
-		filteredInfo: null,
-		sortedInfo: null,
-		searchText: "",
-		searchedColumn: ""
+		filteredInfo   : null,
+		sortedInfo     : null,
+		searchText     : "",
+		searchedColumn : ""
 	};
 
 	handleChange = (pagination, filters, sorter) => {
 		console.log("Various parameters", pagination, filters, sorter);
 		this.setState({
-			filteredInfo: filters,
-			sortedInfo: sorter
+			filteredInfo : filters,
+			sortedInfo   : sorter
 		});
 	};
 
@@ -43,22 +44,22 @@ class TableRender extends React.Component {
 
 	clearAll = () => {
 		this.setState({
-			filteredInfo: null,
-			sortedInfo: null
+			filteredInfo : null,
+			sortedInfo   : null
 		});
 	};
 
 	setobjectSort = () => {
 		this.setState({
-			sortedInfo: {
-				order: "descend",
-				columnKey: "object"
+			sortedInfo : {
+				order     : "descend",
+				columnKey : "object"
 			}
 		});
 	};
 
 	getColumnSearchProps = (dataIndex) => ({
-		filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+		filterDropdown                : ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
 			<div style={{ padding: 8 }}>
 				<Input
 					ref={(node) => {
@@ -84,14 +85,17 @@ class TableRender extends React.Component {
 				</Button>
 			</div>
 		),
-		filterIcon: (filtered) => <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />,
-		onFilter: (value, record) => record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
-		onFilterDropdownVisibleChange: (visible) => {
+		filterIcon                    : (filtered) => (
+			<SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+		),
+		onFilter                      : (value, record) =>
+			record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+		onFilterDropdownVisibleChange : (visible) => {
 			if (visible) {
 				setTimeout(() => this.searchInput.select());
 			}
 		},
-		render: (text) =>
+		render                        : (text) =>
 			this.state.searchedColumn === dataIndex ? (
 				<Highlighter
 					highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
@@ -107,8 +111,8 @@ class TableRender extends React.Component {
 	handleSearch = (selectedKeys, confirm, dataIndex) => {
 		confirm();
 		this.setState({
-			searchText: selectedKeys[0],
-			searchedColumn: dataIndex
+			searchText     : selectedKeys[0],
+			searchedColumn : dataIndex
 		});
 	};
 
@@ -123,21 +127,21 @@ class TableRender extends React.Component {
 		filteredInfo = filteredInfo || {};
 		const columns = [
 			{
-				title: "action",
-				dataIndex: "action",
-				key: "action",
-				filters: [ { text: "Updated", value: "updated" }, { text: "Cutoff", value: "cutoff" } ],
-				filteredValue: filteredInfo.action || null,
-				onFilter: (value, record) => record.action.includes(value),
-				sorter: (a, b) => a.action.length - b.action.length,
-				sortOrder: sortedInfo.columnKey === "action" && sortedInfo.order,
-				ellipsis: true
+				title         : "action",
+				dataIndex     : "action",
+				key           : "action",
+				filters       : [ { text: "Updated", value: "updated" }, { text: "Cutoff", value: "cutoff" } ],
+				filteredValue : filteredInfo.action || null,
+				onFilter      : (value, record) => record.action.includes(value),
+				sorter        : (a, b) => a.action.length - b.action.length,
+				sortOrder     : sortedInfo.columnKey === "action" && sortedInfo.order,
+				ellipsis      : true
 			},
 			{
-				title: "object",
-				dataIndex: "object",
-				key: "object",
-				filters: [
+				title         : "object",
+				dataIndex     : "object",
+				key           : "object",
+				filters       : [
 					{ text: "ingredient", value: "ingredient" },
 					{ text: "meal", value: "meal" },
 					{ text: "recipe", value: "recipe" },
@@ -145,11 +149,11 @@ class TableRender extends React.Component {
 					{ text: "order", value: "order" }
 				],
 				//enter test here to check if all of the above are valid/nothing is missing
-				filteredValue: filteredInfo.object || null,
-				onFilter: (value, record) => record.object.includes(value),
-				sorter: (a, b) => a.object.length - b.object.length,
-				sortOrder: sortedInfo.columnKey === "object" && sortedInfo.order,
-				ellipsis: true
+				filteredValue : filteredInfo.object || null,
+				onFilter      : (value, record) => record.object.includes(value),
+				sorter        : (a, b) => a.object.length - b.object.length,
+				sortOrder     : sortedInfo.columnKey === "object" && sortedInfo.order,
+				ellipsis      : true
 			},
 			// {
 			// 	title: "Name",
@@ -163,20 +167,20 @@ class TableRender extends React.Component {
 			// 	ellipsis: true
 			// },
 			{
-				title: "object_identifier",
-				dataIndex: "object_identifier",
-				key: "object_identifier",
-				sorter: (a, b) => a.object_identifier - b.object_identifier,
-				sortOrder: sortedInfo.columnKey === "object_identifier" && sortedInfo.order,
-				ellipsis: true
+				title     : "object_identifier",
+				dataIndex : "object_identifier",
+				key       : "object_identifier",
+				sorter    : (a, b) => a.object_identifier - b.object_identifier,
+				sortOrder : sortedInfo.columnKey === "object_identifier" && sortedInfo.order,
+				ellipsis  : true
 			},
 			{
-				title: "s3_location",
-				dataIndex: "s3_location",
-				key: "s3_location",
-				sorter: (a, b) => a.s3_location.length - b.s3_location.length,
-				sortOrder: sortedInfo.columnKey === "s3_location" && sortedInfo.order,
-				ellipsis: true,
+				title     : "s3_location",
+				dataIndex : "s3_location",
+				key       : "s3_location",
+				sorter    : (a, b) => a.s3_location.length - b.s3_location.length,
+				sortOrder : sortedInfo.columnKey === "s3_location" && sortedInfo.order,
+				ellipsis  : true,
 				...this.getColumnSearchProps("action")
 			}
 		];
