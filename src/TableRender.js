@@ -2,7 +2,7 @@ import React from "react";
 import { Table, Input, Button } from "antd";
 import "./TableRender.css";
 import { products } from "./products.js";
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import "./index.css";
 import Highlighter from "react-highlight-words";
