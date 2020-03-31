@@ -2,8 +2,11 @@ import React from "react";
 import { Table, Input, Button } from "antd";
 import "./TableComponent.css";
 import { products } from "./products.js";
-// import Highlighter from "react-highlight-words";
-// import { SearchOutlined } from "@ant-design/icons";
+import ReactDOM from "react-dom";
+import "antd/dist/antd.css";
+import "./index.css";
+import Highlighter from "react-highlight-words";
+import { SearchOutlined } from "@ant-design/icons";
 
 let data = products;
 
@@ -54,65 +57,65 @@ class TableComponent extends React.Component {
 		});
 	};
 
-	// getColumnSearchProps = (dataIndex) => ({
-	// 	filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-	// 		<div style={{ padding: 8 }}>
-	// 			<Input
-	// 				ref={(node) => {
-	// 					this.searchInput = node;
-	// 				}}
-	// 				placeholder={`Search ${dataIndex}`}
-	// 				value={selectedKeys[0]}
-	// 				onChange={(e) => setSelectedKeys(e.target.value ? [ e.target.value ] : [])}
-	// 				onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
-	// 				style={{ width: 188, marginBottom: 8, display: "block" }}
-	// 			/>
-	// 			<Button
-	// 				type="primary"
-	// 				onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
-	// 				icon={<SearchOutlined />}
-	// 				size="small"
-	// 				style={{ width: 90, marginRight: 8 }}
-	// 			>
-	// 				Search
-	// 			</Button>
-	// 			<Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
-	// 				Reset
-	// 			</Button>
-	// 		</div>
-	// 	),
-	// 	filterIcon: (filtered) => <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />,
-	// 	onFilter: (value, record) => record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
-	// 	onFilterDropdownVisibleChange: (visible) => {
-	// 		if (visible) {
-	// 			setTimeout(() => this.searchInput.select());
-	// 		}
-	// 	},
-	// 	render: (text) =>
-	// 		this.state.searchedColumn === dataIndex ? (
-	// 			<Highlighter
-	// 				highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-	// 				searchWords={[ this.state.searchText ]}
-	// 				autoEscape
-	// 				textToHighlight={text.toString()}
-	// 			/>
-	// 		) : (
-	// 			text
-	// 		)
-	// });
+	getColumnSearchProps = (dataIndex) => ({
+		filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+			<div style={{ padding: 8 }}>
+				<Input
+					ref={(node) => {
+						this.searchInput = node;
+					}}
+					placeholder={`Search ${dataIndex}`}
+					value={selectedKeys[0]}
+					onChange={(e) => setSelectedKeys(e.target.value ? [ e.target.value ] : [])}
+					onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
+					style={{ width: 188, marginBottom: 8, display: "block" }}
+				/>
+				<Button
+					type="primary"
+					onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
+					icon={<SearchOutlined />}
+					size="small"
+					style={{ width: 90, marginRight: 8 }}
+				>
+					Search
+				</Button>
+				<Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
+					Reset
+				</Button>
+			</div>
+		),
+		filterIcon: (filtered) => <SearchOutlined style={{ color: filtered ? "#1890ff" : undefined }} />,
+		onFilter: (value, record) => record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+		onFilterDropdownVisibleChange: (visible) => {
+			if (visible) {
+				setTimeout(() => this.searchInput.select());
+			}
+		},
+		render: (text) =>
+			this.state.searchedColumn === dataIndex ? (
+				<Highlighter
+					highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+					searchWords={[ this.state.searchText ]}
+					autoEscape
+					textToHighlight={text.toString()}
+				/>
+			) : (
+				text
+			)
+	});
 
-	// handleSearch = (selectedKeys, confirm, dataIndex) => {
-	// 	confirm();
-	// 	this.setState({
-	// 		searchText: selectedKeys[0],
-	// 		searchedColumn: dataIndex
-	// 	});
-	// };
+	handleSearch = (selectedKeys, confirm, dataIndex) => {
+		confirm();
+		this.setState({
+			searchText: selectedKeys[0],
+			searchedColumn: dataIndex
+		});
+	};
 
-	// handleReset = (clearFilters) => {
-	// 	clearFilters();
-	// 	this.setState({ searchText: "" });
-	// };
+	handleReset = (clearFilters) => {
+		clearFilters();
+		this.setState({ searchText: "" });
+	};
 
 	render() {
 		let { sortedInfo, filteredInfo } = this.state;
@@ -173,14 +176,15 @@ class TableComponent extends React.Component {
 				key: "s3_location",
 				sorter: (a, b) => a.s3_location.length - b.s3_location.length,
 				sortOrder: sortedInfo.columnKey === "s3_location" && sortedInfo.order,
-				ellipsis: true
+				ellipsis: true,
+				...this.getColumnSearchProps("action")
 			}
 		];
 		console.log(data);
 		return (
 			<div>
 				<div className="table-operations">
-					<Button onClick={this.setobjectSort}>Sort object</Button>
+					<Button onClick={this.setobjectSort}>Sort Object</Button>
 					<Button onClick={this.clearFilters}>Clear filters</Button>
 					<Button onClick={this.clearAll}>Clear filters and sorters</Button>
 				</div>
