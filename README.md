@@ -51,25 +51,29 @@ The app is built using a component from the [Ant.Design](https://ant.design) lib
 
 Additional components can be found [here](https://ant.design/components/table/)
 
-**Basic guide on adding new column**
+## Basic guide on adding new column
 
 <ol>
 <li>Run through the above</li> 
-<li>Copy and paste the code below and insert it in the columns section</li> 
-	
+<li>Copy and paste the code below and insert it in the columns section. This will be a simple sorted column.</li> 
 ```javascript
 {
-    title     : "object_identifier",
-    dataIndex : "object_identifier",
-    key       : "object_identifier",
-    sorter    : (a, b) => a.object_identifier - b.object_identifier,
-    sortOrder : sortedInfo.columnKey === "object_identifier" && sortedInfo.order,
+    title     : "new_item",
+    dataIndex : "new_item",
+    key       : "new_item",
+    sorter    : (a, b) => a.new_item - b.new_item,
+    sortOrder : sortedInfo.columnKey === "new_item" && sortedInfo.order,
     ellipsis  : true
 }
 ```
-
-  <li> Test</li>
-            
+<li>Make sure the name (in this case `new_item`) lines up with the array which the table is visualising</li>
+<li>For aditional functionality go to the [Ant.Design Table page](https://ant.design/components/table/) and take just copy, reformat and add the code to the existing TableRender.js file</li>
 </ol>
+
+## For help or problems
+
+Reach out to August Cayzer (august.cayzer@gousto.co.uk or @august on slack)
+
+thanks and if you have got this far, hopefully this helps you with your work!!
 
 
