@@ -56,6 +56,7 @@ Additional components can be found [here](https://ant.design/components/table/)
 <ol>
 <li>Run through the above</li> 
 <li>Copy and paste the code below and insert it in the columns section</li> 
+```
 {
 				title     : "View Object in AWS",
 				key       : "s3_location_link",
@@ -68,6 +69,7 @@ Additional components can be found [here](https://ant.design/components/table/)
 					</span>
 				)
 			}
+```
   <li> Test</li>
             
 </ol>
