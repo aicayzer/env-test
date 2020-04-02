@@ -44,7 +44,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 ## Notes on the app and Ant.Design
 
 The app is built using a component from the Ant.Design library (namely the Table). There are two key reasons for this:<br/>
-<li>
-<ol>Ant.Design is very good at doing the heavy lifiting when it comes to filtering, sorting and pagenating the table</ol> 
-<ol>It makes it very easy to add/remove functionality</ol> 
-</li>
+<ol>
+<li>Ant.Design is very good at doing the heavy lifiting when it comes to filtering, sorting and pagenating the table</li> 
+<li>It makes it very easy to add/remove functionality</li> 
+</ol>
