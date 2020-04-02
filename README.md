@@ -1,5 +1,7 @@
 **Work in Progress**
 
+## WELCOME!
+
 **This is a Table which can be used to visualise data from Gousto's DynamoDB archiver functions**
 
 This project uses React for the front end and ontop of this the popular library Ant.Design<br />
@@ -40,3 +42,9 @@ This is what will be posted the the S3 bucket<br />
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ## Notes on the app and Ant.Design
+
+The app is built using a component from the Ant.Design library (namely the Table). There are two key reasons for this:<br/>
+<li>
+<ol>Ant.Design is very good at doing the heavy lifiting when it comes to filtering, sorting and pagenating the table</ol> 
+<ol>It makes it very easy to add/remove functionality</ol> 
+</li>
