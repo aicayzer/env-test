@@ -41,12 +41,35 @@ This is what will be posted the the S3 bucket<br />
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## Notes on the app and [Ant.Design](https://ant.design)
+## Notes on the app and Ant.Design
 
 The app is built using a component from the [Ant.Design](https://ant.design) library (namely the Table). There are two key reasons for this:<br/>
 <ol>
 <li>[Ant.Design](https://ant.design) is very good at doing the heavy lifiting when it comes to filtering, sorting and pagenating the table</li> 
 <li>It makes it very easy to add/remove functionality</li> 
+</ol>
+
+Additional components can be found [here](https://ant.design/components/table/)
+
+**Basic guide on adding new column**
+
+<ol>
+<li>Run through the above</li> 
+<li>Copy and paste the code below and insert it in the columns section</li> 
+{
+				title     : "View Object in AWS",
+				key       : "s3_location_link",
+				dataIndex : "s3_location_link",
+				render    : (text, record, key, dataIndex) => (
+					<span>
+						<a href={record.s3_location_link} rel="noopener noreferrer" target="_blank ">
+							View Object
+						</a>
+					</span>
+				)
+			}
+  <li> Test</li>
+            
 </ol>
 
 
