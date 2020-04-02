@@ -59,17 +59,13 @@ Additional components can be found [here](https://ant.design/components/table/)
 	
 ```javascript
 {
-				title     : "View Object in AWS",
-				key       : "s3_location_link",
-				dataIndex : "s3_location_link",
-				render    : (text, record, key, dataIndex) => (
-					<span>
-						<a href={record.s3_location_link} rel="noopener noreferrer" target="_blank ">
-							View Object
-						</a>
-					</span>
-				)
-			}
+    title     : "object_identifier",
+    dataIndex : "object_identifier",
+    key       : "object_identifier",
+    sorter    : (a, b) => a.object_identifier - b.object_identifier,
+    sortOrder : sortedInfo.columnKey === "object_identifier" && sortedInfo.order,
+    ellipsis  : true
+}
 ```
 
   <li> Test</li>
