@@ -157,17 +157,6 @@ class TableRender extends React.Component {
 				sortOrder     : sortedInfo.columnKey === "object" && sortedInfo.order,
 				ellipsis      : true
 			},
-			// {
-			// 	title: "Name",
-			// 	dataIndex: "name",
-			// 	key: "name",
-			// 	filters: [ { text: "Joe", value: "Joe" }, { text: "Jim", value: "Jim" } ],
-			// 	filteredValue: filteredInfo.name || null,
-			// 	onFilter: (value, record) => record.name.includes(value),
-			// 	sorter: (a, b) => a.name.length - b.name.length,
-			// 	sortOrder: sortedInfo.columnKey === "name" && sortedInfo.order,
-			// 	ellipsis: true
-			// },
 			{
 				title     : "object_identifier",
 				dataIndex : "object_identifier",
@@ -191,20 +180,12 @@ class TableRender extends React.Component {
 				dataIndex : "s3_location_link",
 				render    : (text, record, key, dataIndex) => (
 					<span>
-						<a href={data} target="_blank">
+						<a href={record.s3_location_link} rel="noopener noreferrer" target="_blank ">
 							View Object
 						</a>
 					</span>
 				)
 			}
-			//figure out how to enter the right link
-
-			// {
-			// 	title     : "TEST",
-			// 	dataIndex : "s3_location_link",
-			// 	key       : "s3_location_link",
-			// 	ellipsis  : true
-			// }
 		];
 		return (
 			<div>
